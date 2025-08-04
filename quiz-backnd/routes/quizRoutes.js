@@ -73,6 +73,17 @@ router.delete('/:id', verifyToken, authorizeRoles('teacher'), async (req, res) =
     res.status(500).json({ message: 'Failed to delete quiz', error: err.message });
   }
 });
+
+// Get all quizzes to teacher
+router.get('/my-quizzes', verifyToken, authorizeRoles('teacher'), async (req, res) => {
+  try {
+    const quizzes = await Quiz.find({ createdBy: req.user.id });
+    res.json(quizzes);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch quizzes', error: err.message });
+  }
+});
+
 //submit answers
 router.post('/:id/submit', verifyToken, authorizeRoles('student'), async (req, res) => {
   const quizId = req.params.id;

@@ -5,6 +5,7 @@ import StudentLogin from './Components/StudentLogin/StudentLogin';
 import Signup from './Components/Signup/Signup';
 import TeacherSignup from './Components/Signup/TeacherSignup/TeacherSignup';
 import StudentSignup from './Components/Signup/StudentSignup/StudentSignup';
+import TeacherDashboard from './Components/TeacherDashboard/TeacherDashboard';
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/signup/teacher" element={<TeacherSignup />} />
         <Route path="/signup/student" element={<StudentSignup />} />
-        <Route path="/teacher/dashboard" element={<div>Teacher Dashboard</div>} />
+        <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
         <Route path="/student/dashboard" element={<div>Student Dashboard</div>} />
 
       </Routes>

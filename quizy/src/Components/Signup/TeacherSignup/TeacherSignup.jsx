@@ -19,18 +19,40 @@ const TeacherSignup = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
       alert('Passwords do not match!');
       return;
     }
- 
-    console.log('Submitting teacher signup:', formData);
 
-    
-    navigate('/login/teacher');
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          email: formData.email,
+          password: formData.password,
+          role: 'teacher', // 👈 important!
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.message);
+        navigate('/login/teacher');
+      } else {
+        alert(data.message || 'Signup failed.');
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
+      alert('Server error. Please try again later.');
+    }
   };
 
   return (

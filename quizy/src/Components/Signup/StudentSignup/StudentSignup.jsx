@@ -19,7 +19,7 @@ const StudentSignup = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
@@ -27,10 +27,32 @@ const StudentSignup = () => {
       return;
     }
 
-    console.log('Submitting student signup:', formData);
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          email: formData.email,
+          password: formData.password,
+          role: 'student',  
+        }),
+      });
 
-    
-    navigate('/login/student');
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.message);
+        navigate('/login/student');
+      } else {
+        alert(data.message || 'Signup failed.');
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
+      alert('Server error. Please try again later.');
+    }
   };
 
   return (
@@ -81,7 +103,7 @@ const StudentSignup = () => {
           />
         </label>
 
-        <button type="submit">Sign Up</button>
+        <button type="submit">Sign up as Student</button>
       </form>
     </div>
   );

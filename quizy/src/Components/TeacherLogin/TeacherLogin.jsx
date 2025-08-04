@@ -1,49 +1,67 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./TeacherLogin.css";
-
-function TeacherLogin({ onLogin }) {
-  const [username, setUsername] = useState("");
+function TeacherLogin() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-     
-    if (username === "teacher" && password === "password") {
-      setError("");
-      if (onLogin) onLogin(username);
-    } else {
-      setError("Invalid credentials");
+
+    const loginData = {
+      email,
+      password,
+      role: "teacher",  
+    };
+
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(loginData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Login successful
+        // Save token if needed, then navigate
+        localStorage.setItem("token", data.token);
+        navigate("/teacher/dashboard");
+      } else {
+        setError(data.message || "Login failed");
+      }
+    } catch (err) {
+      setError("Network error");
     }
   };
 
-  return (
-    <div className="teacher-login-container">
-      <h2>Teacher Login</h2>
-      <form className="teacher-login-form" onSubmit={handleSubmit}>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
+return (
+  <div className="teacher-login-container">
+    <h2>Teacher Login</h2>
+    <form className="teacher-login-form" onSubmit={handleSubmit}>
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+      />
+      <button type="submit">Login as Teacher</button>
+      {error && <p className="teacher-login-error">{error}</p>}
+    </form>
+  </div>
+);
 
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-
-        <button type="submit">Login</button>
-        {error && <div style={{ color: "red", marginTop: "10px" }}>{error}</div>}
-      </form>
-    </div>
-  );
 }
 
 export default TeacherLogin;

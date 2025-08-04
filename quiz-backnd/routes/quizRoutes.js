@@ -4,10 +4,12 @@ const Quiz = require('../models/Quiz');
 const { verifyToken, authorizeRoles } = require('../middleware/authMiddleware');
 
 // Create  
+// Add a question
+// Create quiz
 router.post('/', verifyToken, authorizeRoles('teacher'), async (req, res) => {
-  const { title, description, questions } = req.body;
-
   try {
+    const { title, description, questions } = req.body;
+
     const quiz = new Quiz({
       title,
       description,
@@ -22,6 +24,8 @@ router.post('/', verifyToken, authorizeRoles('teacher'), async (req, res) => {
     res.status(500).json({ message: 'Failed to create quiz', error: err.message });
   }
 });
+
+
 
 // Update  
 router.put('/:id', verifyToken, authorizeRoles('teacher'), async (req, res) => {

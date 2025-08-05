@@ -1,19 +1,33 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import './StudentLogin.css';
 
-function StudentLogin({ onLogin }) {
-  const [username, setUsername] = useState("");
+function StudentLogin() {
+  const [email, setEmail] = useState("");        // <- changed to email
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (username === "student" && password === "password") {
-      setError("");
-      if (onLogin) onLogin(username);
-    } else {
-      setError("Invalid credentials");
+    try {
+      const response = await axios.post("http://localhost:5000/api/auth/login", {
+        email,
+        password,
+        role: "student",  
+      });
+
+      const { token } = response.data;
+ 
+      localStorage.setItem("token", token);
+ 
+      navigate("/student/dashboard");
+
+    } catch (err) {
+      const msg = err.response?.data?.message || "Login failed";
+      setError(msg);
     }
   };
 
@@ -21,12 +35,12 @@ function StudentLogin({ onLogin }) {
     <div className="student-login-container">
       <h2>Student Login</h2>
       <form className="student-login-form" onSubmit={handleSubmit}>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="email">Email</label>
         <input
-          id="username"
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          id="email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
 

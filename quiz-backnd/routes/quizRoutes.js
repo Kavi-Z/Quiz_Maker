@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Quiz = require('../models/Quiz');
+const Result = require('../models/Result');
 const { verifyToken, authorizeRoles } = require('../middleware/authMiddleware');
 
-// Create  
-// Add a question
+ 
 // Create quiz
 router.post('/', verifyToken, authorizeRoles('teacher'), async (req, res) => {
   try {
@@ -87,6 +87,15 @@ router.get('/my-quizzes', verifyToken, authorizeRoles('teacher'), async (req, re
     res.status(500).json({ message: 'Failed to fetch quizzes', error: err.message });
   }
 });
+//  For students 
+router.get('/all', verifyToken, authorizeRoles('student'), async (req, res) => {
+  try {
+    const quizzes = await Quiz.find();
+    res.json(quizzes);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch quizzes', error: err.message });
+  }
+});
 
 //submit answers
 router.post('/:id/submit', verifyToken, authorizeRoles('student'), async (req, res) => {
@@ -126,7 +135,17 @@ router.post('/:id/submit', verifyToken, authorizeRoles('student'), async (req, r
     res.status(500).json({ message: 'Failed to submit quiz', error: err.message });
   }
 });
- 
+ router.get('/:id', verifyToken, async (req, res) => {
+  try {
+    const quiz = await Quiz.findById(req.params.id);
+    if (!quiz) {
+      return res.status(404).json({ message: 'Quiz not found' });
+    }
+    res.json(quiz);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch quiz', error: err.message });
+  }
+});
 router.get('/:id/results', verifyToken, authorizeRoles('teacher'), async (req, res) => {
   const quizId = req.params.id;
   const results = await Result.find({ quiz: quizId }).populate('user', 'name');

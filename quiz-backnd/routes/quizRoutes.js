@@ -106,12 +106,16 @@ router.post('/:id/submit', verifyToken, authorizeRoles('student'), async (req, r
     const quiz = await Quiz.findById(quizId);
     if (!quiz) return res.status(404).json({ message: 'Quiz not found' });
 
-    let score = 0;
-    quiz.questions.forEach((question, index) => {
-      if (parseInt(question.correctAnswer) === parseInt(answers[index])) {
-        score++;
-      }
-    });
+    let score=0;
+ quiz.questions.forEach((question, index) => {
+  const selectedOption = question.options[answers[index]];
+  if (selectedOption === question.correctAnswer) {
+    score++;
+
+  }
+});
+
+
 
     // Save the result
     const Result = require('../models/Result');
@@ -135,6 +139,7 @@ router.post('/:id/submit', verifyToken, authorizeRoles('student'), async (req, r
     res.status(500).json({ message: 'Failed to submit quiz', error: err.message });
   }
 });
+
  router.get('/:id', verifyToken, async (req, res) => {
   try {
     const quiz = await Quiz.findById(req.params.id);
@@ -158,6 +163,32 @@ router.get('/my-results', verifyToken, authorizeRoles('student'), async (req, re
   const results = await Result.find({ user: userId }).populate('quiz', 'title');
   res.json(results);
 });
+
+
+
+
+
+router.get('/:quizId/leaderboard', async (req, res) => {
+  const { quizId } = req.params;
+
+  try {
+    const results = await Result.find({ quiz: quizId })
+      .populate('user', 'name') 
+      .sort({ score: -1 });     // Sort by score descending
+
+    const leaderboard = results.map(result => ({
+      name: result.user?.name || 'Unknown',
+      score: result.score,
+    }));
+
+    res.status(200).json(leaderboard);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to fetch leaderboard' });
+  }
+});
+
+
 
 
 module.exports = router;

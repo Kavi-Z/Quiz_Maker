@@ -8,6 +8,7 @@ import StudentSignup from './Components/Signup/StudentSignup/StudentSignup';
 import TeacherDashboard from './Components/TeacherDashboard/TeacherDashboard';
 import StudentDashboard from './Components/StudentDashboard/StudentDashboard';
 import TakeQuiz from './Components/TakeQuiz/TakeQuiz';
+import Leaderboard from './Components/Leaderboard/Leaderboard';
 function App() {
   return (
     <Router>
@@ -22,6 +23,8 @@ function App() {
         <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
         <Route path="/student/dashboard" element={<StudentDashboard />} />
         <Route path="/quiz/:id" element={<TakeQuiz />} />
+        <Route path="/leaderboard/:quizId" element={<Leaderboard />} />
+
 
 
       </Routes>

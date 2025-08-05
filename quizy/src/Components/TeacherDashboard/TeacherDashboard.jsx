@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // ✅ Import navigate
 
 function TeacherDashboard() {
   const [quizzes, setQuizzes] = useState([]);
@@ -11,6 +12,8 @@ function TeacherDashboard() {
     questions: [],
   });
   const [editingQuizId, setEditingQuizId] = useState(null);
+
+  const navigate = useNavigate(); // ✅ Initialize navigate
 
   useEffect(() => {
     fetchQuizzes();
@@ -111,6 +114,11 @@ function TeacherDashboard() {
     setEditingQuizId(quiz._id);
     setShowCreateForm(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // ✅ Navigate to leaderboard
+  const handleLeaderboard = (quizId) => {
+    navigate(`/leaderboard/${quizId}`);
   };
 
   return (
@@ -242,6 +250,7 @@ function TeacherDashboard() {
               <button
                 onClick={() => handleDeleteQuiz(quiz._id)}
                 style={{
+                  marginRight: "10px",
                   backgroundColor: "red",
                   color: "white",
                   border: "none",
@@ -251,6 +260,20 @@ function TeacherDashboard() {
                 }}
               >
                 Delete
+              </button>
+              {/* ✅ Leaderboard button */}
+              <button
+                onClick={() => handleLeaderboard(quiz._id)}
+                style={{
+                  backgroundColor: "#2196F3",
+                  color: "white",
+                  border: "none",
+                  padding: "5px 10px",
+                  cursor: "pointer",
+                  borderRadius: "4px"
+                }}
+              >
+                Leaderboard
               </button>
             </div>
 

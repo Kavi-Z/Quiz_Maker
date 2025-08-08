@@ -2,9 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Quiz = require('../models/Quiz');
 const Result = require('../models/Result');
+
 const { verifyToken, authorizeRoles } = require('../middleware/authMiddleware');
 
  
+
+
 // Create quiz
 router.post('/', verifyToken, authorizeRoles('teacher'), async (req, res) => {
   try {
@@ -166,29 +169,31 @@ router.get('/my-results', verifyToken, authorizeRoles('student'), async (req, re
 
 
 
-
-
-router.get('/:quizId/leaderboard', async (req, res) => {
+router.get('/:quizId/leaderboard', verifyToken, authorizeRoles('teacher'), async (req, res) => {
   const { quizId } = req.params;
 
   try {
-    const results = await Result.find({ quiz: quizId })
-      .populate('user', 'name') 
-      .sort({ score: -1 });     // Sort by score descending
+ 
+    const quiz = await Quiz.findById(quizId);
+    if (!quiz) return res.status(404).json({ message: 'Quiz not found' });
 
-    const leaderboard = results.map(result => ({
+    if (quiz.createdBy.toString() !== req.user.id) {
+      return res.status(403).json({ message: 'You are not authorized to view this leaderboard' });
+    }
+ 
+    const results = await Result.find({ quiz: new mongoose.Types.ObjectId(quizId) })
+      .populate('user', 'name') 
+      .sort({ score: -1 });
+
+    const leaderboard = results.map((result) => ({
       name: result.user?.name || 'Unknown',
       score: result.score,
     }));
 
     res.status(200).json(leaderboard);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Failed to fetch leaderboard' });
+    console.error('Leaderboard error:', err);
+    res.status(500).json({ message: 'Failed to fetch leaderboard', error: err.message });
   }
 });
-
-
-
-
 module.exports = router;

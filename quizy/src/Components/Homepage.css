@@ -1,8 +1,49 @@
-body, html {
+.homepage-container {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: #f0f2f5;
+  background: url('../images/Landing_Page.jpg') no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+  color: white;
+  position: relative;
+  z-index: 0;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    url('../images/left.png') no-repeat top left fixed,
+    url('../images/right.png') no-repeat top right fixed,
+    url('../images/Rectangle\ 15.png') no-repeat center center fixed;
+
+  background-size: 600px, 200px;  
+  opacity: 0.6;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.teacher-btn {
+  background-color: #E36403;
+  color: white;
+}
+
+.teacher-btn:hover {
+  background-color: #007bff; 
+}
+
+.student-btn {
+  background-color: #007bff;  
+  color: white;
+}
+
+.student-btn:hover {
+  background-color: #E36403;
 }
 
 .homepage-container {
@@ -19,35 +60,22 @@ body, html {
 
 .homepage-header h1 {
   font-size: 36px;
-  color: #333;
+  color: white;
+  text-align: center;
 }
 
 .homepage-main h2 {
   font-size: 24px;
   margin-bottom: 20px;
-  color: #444;
+  color: white;
+  text-align: center;
 }
 
 .button-group {
   display: flex;
   gap: 20px;
 }
-
-.button-group button {
-  padding: 12px 24px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  border-radius: 8px;
-  background-color: #007bff;
-  color: white;
-  transition: background-color 0.3s ease;
-}
-
-.button-group button:hover {
-  background-color: #0056b3;
-}
-
+ 
 .create-account-section {
   margin-top: 40px;
   text-align: center;
@@ -67,7 +95,7 @@ body, html {
 .signup-link {
   margin-top: 30px;
   text-align: center;
-  color: #007bff;
+  color: #E36403;
   text-decoration: underline;
   cursor: pointer;
   font-weight: 500;

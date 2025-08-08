@@ -8,8 +8,8 @@ const Signup = () => {
     <div className="signup-container">
       <h2>Sign Up</h2>
       <div className="button-group">
-        <button onClick={() => navigate('/signup/teacher')}>Sign up as Teacher</button>
-        <button onClick={() => navigate('/signup/student')}>Sign up as Student</button>
+        <button className='teacher-btn' onClick={() => navigate('/signup/teacher')}>Sign up as Teacher</button>
+        <button className='student-btn' onClick={() => navigate('/signup/student')}>Sign up as Student</button>
       </div>
     </div>
   );

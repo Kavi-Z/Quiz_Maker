@@ -6,23 +6,59 @@ const Leaderboard = () => {
   const { quizId } = useParams();
   const [leaderboard, setLeaderboard] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const res = await axios.get(`/api/quizzes/${quizId}/leaderboard`);
+        setError(null);
+        console.log('Fetching leaderboard for quizId:', quizId);
+        
+        // Get token from localStorage (adjust based on how you store auth tokens)
+        const token = localStorage.getItem('token') || localStorage.getItem('authToken');
+        
+        if (!token) {
+          throw new Error('No authentication token found. Please login.');
+        }
+
+        const res = await axios.get(`/api/quizzes/${quizId}/leaderboard`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Add auth header
+          },
+        });
+        
+        console.log('Leaderboard data:', res.data);
         setLeaderboard(res.data);
       } catch (err) {
         console.error('Failed to fetch leaderboard', err);
+        console.error('Error details:', err.response?.data || err.message);
+        console.error('Status:', err.response?.status);
+        
+        if (err.response?.status === 401) {
+          setError('Please login to view the leaderboard.');
+        } else if (err.response?.status === 403) {
+          setError('You are not authorized to view this leaderboard. Only teachers can view leaderboards.');
+        } else if (err.response?.status === 404) {
+          setError('Quiz not found.');
+        } else {
+          setError(`Failed to load leaderboard: ${err.response?.data?.message || err.message}`);
+        }
       } finally {
         setLoading(false);
       }
     };
 
-    fetchLeaderboard();
+    if (quizId) {
+      fetchLeaderboard();
+    } else {
+      setError('No quiz ID provided');
+      setLoading(false);
+    }
   }, [quizId]);
 
   if (loading) return <p>Loading leaderboard...</p>;
+  
+  if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
   return (
     <div style={{ padding: '20px' }}>

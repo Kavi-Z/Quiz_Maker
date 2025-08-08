@@ -27,18 +27,31 @@ body, html {
   gap: 20px;
 }
 
-.button-group button {
+.teacher-btn {
   padding: 12px 24px;
   font-size: 16px;
   border: none;
   cursor: pointer;
   border-radius: 8px;
-  background-color: #007bff;
+  background-color: #007bff; 
   color: white;
   transition: background-color 0.3s ease;
   min-width: 150px;
 }
-
-.button-group button:hover {
-  background-color: #0056b3;
+.student-btn {
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: #E36403;
+  color: white;
+  transition: background-color 0.3s ease;
+  min-width: 150px;
+}
+.teacher-btn:hover {
+  background-color:  black;
+}
+.student-btn:hover {
+  background-color: black;
 }

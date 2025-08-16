@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import './StudentDashboard.css';
 
 function StudentDashboard() {
   const [quizzes, setQuizzes] = useState([]);
@@ -37,22 +38,23 @@ function StudentDashboard() {
   };
 
   return (
-    <div>
+    <div className="StudentDashboardContainer">
+       <button className="back-arrow" onClick={() => navigate(-1)}></button>
       <h2>Student Dashboard</h2>
-      <ul>
+      <div className="quiz-list">
         {quizzes.map((quiz) => {
           const result = results.find((r) => r.quiz._id === quiz._id);
           return (
-            <li key={quiz._id}>
+            <div key={quiz._id} className="quiz-card">
               <b>{quiz.title}</b>
               <button onClick={() => navigate(`/quiz/${quiz._id}`)}>Take Quiz</button>
               {result && (
-                <span> | Score: {result.score} / {result.totalQuestions}</span>
+                <span>Score: {result.score} / {result.totalQuestions}</span>
               )}
-            </li>
+            </div>
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 }

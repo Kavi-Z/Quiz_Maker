@@ -26,8 +26,7 @@ function TeacherLogin() {
       const data = await response.json();
 
       if (response.ok) {
-        // Login successful
-        // Save token if needed, then navigate
+        
         localStorage.setItem("token", data.token);
         navigate("/teacher/dashboard");
       } else {
@@ -37,29 +36,30 @@ function TeacherLogin() {
       setError("Network error");
     }
   };
-
 return (
   <div className="teacher-login-container">
-    <h2>Teacher Login</h2>
-    <form className="teacher-login-form" onSubmit={handleSubmit}>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <button type="submit">Login as Teacher</button>
-      {error && <p className="teacher-login-error">{error}</p>}
-    </form>
-  </div>
+  <button className="back-arrow" onClick={() => navigate(-1)}></button>
+  <h2>Teacher Login</h2>
+  <form className="teacher-login-form" onSubmit={handleSubmit}>
+    <input
+      type="email"
+      placeholder="Email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      required
+    />
+    <input
+      type="password"
+      placeholder="Password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      required
+    />
+    <button type="submit">Login as Teacher</button>
+    {error && <p className="teacher-login-error">{error}</p>}
+  </form>
+</div>
+
 );
 
 }

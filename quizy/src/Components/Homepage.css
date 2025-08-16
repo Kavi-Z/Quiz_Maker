@@ -2,14 +2,27 @@
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background: url('../images/Landing_Page.jpg') no-repeat center center fixed;
+  background: url('../images/home.png') no-repeat center center fixed;
   background-size: cover;
-  height: 100%;
+  height: 100vh;
   color: white;
   position: relative;
   z-index: 0;
+ 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+} 
+.content-inside-rect
+{
+display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;  
+  left: 350px;
 }
-
 body::before {
   content: '';
   position: fixed;
@@ -17,82 +30,87 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
-    url('../images/left.png') no-repeat top left fixed,
-    url('../images/right.png') no-repeat top right fixed,
-    url('../images/Rectangle\ 15.png') no-repeat center center fixed;
-
   background-size: 600px, 200px;  
   opacity: 0.6;
   z-index: 1;
   pointer-events: none;
 }
+.homepage-header{
+  position: absolute;
+  top: 150px;
+  left:350px;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 80px;
+}
+.content_home{
+  position: absolute;
+  top: 320px;
+  left:350px;
+  transform: translateX(-50%);
+  text-align: center;
 
-.teacher-btn {
+}
+.homepage-container .teacher-btn {
   background-color: #E36403;
   color: white;
+  width: 200px;
+  font-weight: 100;
 }
 
-.teacher-btn:hover {
+.homepage-container .teacher-btn:hover {
   background-color: #007bff; 
 }
 
-.student-btn {
+.homepage-container .student-btn {
   background-color: #007bff;  
   color: white;
 }
 
-.student-btn:hover {
+.homepage-container .student-btn:hover {
   background-color: #E36403;
 }
 
-.homepage-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
-.homepage-header {
+.homepage-container .homepage-header {
   margin-bottom: 30px;
 }
 
-.homepage-header h1 {
+.homepage-container .homepage-header h1 {
   font-size: 36px;
   color: white;
   text-align: center;
 }
 
-.homepage-main h2 {
+.homepage-container .homepage-main h2 {
   font-size: 24px;
   margin-bottom: 20px;
   color: white;
   text-align: center;
 }
 
-.button-group {
+.homepage-container .button-group {
   display: flex;
   gap: 20px;
 }
  
-.create-account-section {
+.homepage-container .create-account-section {
   margin-top: 40px;
   text-align: center;
 }
 
-.create-account-section p {
+.homepage-container .create-account-section p {
   margin-bottom: 15px;
   font-size: 16px;
   color: #555;
 }
 
-.create-account-section .button-group {
+.homepage-container .create-account-section .button-group {
   display: flex;
   justify-content: center;
   gap: 20px;
 }
-.signup-link {
+
+.homepage-container .signup-link {
   margin-top: 30px;
   text-align: center;
   color: #E36403;
@@ -101,6 +119,6 @@ body::before {
   font-weight: 500;
 }
 
-.signup-link:hover {
+.homepage-container .signup-link:hover {
   color: #0056b3;
 }

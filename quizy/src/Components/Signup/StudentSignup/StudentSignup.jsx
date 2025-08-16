@@ -56,7 +56,9 @@ const StudentSignup = () => {
   };
 
   return (
+    <div className='Wrapper_signup'>
     <div className="signup-container">
+         <button className="back-arrow" onClick={() => navigate(-1)}></button> 
       <h2>Student Sign Up</h2>
       <form className="signup-form" onSubmit={handleSubmit}>
         <label>
@@ -105,6 +107,7 @@ const StudentSignup = () => {
 
         <button type="submit">Sign up as Student</button>
       </form>
+    </div>
     </div>
   );
 };

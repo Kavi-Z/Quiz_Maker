@@ -11,11 +11,18 @@ const Homepage = () => {
       <main className="homepage-main">
         <div className="rect-wrapper">
         
-
-          <div className="content-inside-rect">
-            <header className="homepage-header">
-              <h1>Quiz Maker</h1>
+         <header className="homepage-header">
+              <p>Quiz Maker</p>
             </header>
+            <div className='content_home'> <p >
+              Create.Share.Evaluate
+              </p>
+              <p>
+                Build quizzes effortlessly and track results in real-time.
+                </p></div>
+           
+          <div className="content-inside-rect">
+           
 
             <h2>Select Your Role</h2>
 

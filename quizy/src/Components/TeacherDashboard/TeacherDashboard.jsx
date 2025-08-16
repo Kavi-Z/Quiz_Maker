@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // ✅ Import navigate
+import { useNavigate } from 'react-router-dom';  
+import './TeacherDashboard.css';
 
 function TeacherDashboard() {
   const [quizzes, setQuizzes] = useState([]);
@@ -13,7 +14,7 @@ function TeacherDashboard() {
   });
   const [editingQuizId, setEditingQuizId] = useState(null);
 
-  const navigate = useNavigate(); // ✅ Initialize navigate
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     fetchQuizzes();
@@ -115,13 +116,14 @@ function TeacherDashboard() {
     setShowCreateForm(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  // ✅ Navigate to leaderboard
+ 
   const handleLeaderboard = (quizId) => {
     navigate(`/leaderboard/${quizId}`);
   };
 
   return (
+    <div className="DashboardContainer">
+         <button className="back-arrow" onClick={() => navigate(-1)}></button> 
     <div className="dashboard" style={{ padding: "20px" }}>
       <h1>Teacher Dashboard</h1>
       <h2>Your Quizzes</h2>
@@ -160,7 +162,7 @@ function TeacherDashboard() {
           </button>
 
           {newQuiz.questions.map((q, index) => (
-            <div key={index} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
+            <div key={index} style={{ border: '1px solid #ccc', padding: '20px', marginBottom: '10px' }}>
               <input
                 type="text"
                 placeholder="Question Text"
@@ -201,7 +203,8 @@ function TeacherDashboard() {
                   border: "none",
                   padding: "5px 10px",
                   cursor: "pointer",
-                  borderRadius: "4px"
+                  borderRadius: "4px",
+                  alignContent: "center"
                 }}
               >
                 Remove Question
@@ -223,10 +226,15 @@ function TeacherDashboard() {
             key={quiz._id}
             style={{
               border: "1px solid #ccc",
-              margin: "20px 0",
-              padding: "10px",
-              borderRadius: "8px",
-              position: "relative"
+    color: "white",
+    backgroundColor: "transparent",
+    margin: "20px auto",    
+    padding: "10px",
+    borderRadius: "8px",
+    width: "100%",
+    position: "relative",
+    textAlign: "left"
+
             }}
           >
             <h3 onClick={() => toggleQuizView(quiz._id)} style={{ cursor: "pointer" }}>{quiz.title}</h3>
@@ -261,7 +269,7 @@ function TeacherDashboard() {
               >
                 Delete
               </button>
-              {/* ✅ Leaderboard button */}
+             
               <button
                 onClick={() => handleLeaderboard(quiz._id)}
                 style={{
@@ -288,7 +296,7 @@ function TeacherDashboard() {
                         <li key={optIdx}>{option}</li>
                       ))}
                     </ul>
-                    <p style={{ color: "green" }}>
+                    <p style={{ color: "#4CAF50" }}>
                       <strong>Correct Answer:</strong> {q.correctAnswer}
                     </p>
                   </div>
@@ -298,6 +306,7 @@ function TeacherDashboard() {
           </div>
         ))
       )}
+    </div>
     </div>
   );
 }

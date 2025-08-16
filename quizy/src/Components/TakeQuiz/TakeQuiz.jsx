@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import './TakeQuiz.css';
 
-function TakeQuiz() { 
+function TakeQuiz() {
   const { id } = useParams();
   const navigate = useNavigate();
- 
+
   const [quizData, setQuizData] = useState(null);
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [score, setScore] = useState(0);
   const [error, setError] = useState("");
- 
+
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
@@ -27,47 +28,44 @@ function TakeQuiz() {
     };
     fetchQuiz();
   }, [id]);
- 
+
   const handleOptionChange = (questionId, selectedOption) => {
     setAnswers(prev => ({
       ...prev,
       [questionId]: selectedOption,
     }));
   };
- 
+
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    const token = localStorage.getItem("token");
 
-  const token = localStorage.getItem("token");
+    const orderedAnswers = quizData.questions.map((question) => {
+      return question.options.indexOf(answers[question._id]);
+    });
 
-  // Create answer array in order of questions
-  const orderedAnswers = quizData.questions.map((question) => {
-    return question.options.indexOf(answers[question._id]);
-  });
+    try {
+      const res = await axios.post(
+        `http://localhost:5000/api/quizzes/${id}/submit`,
+        { answers: orderedAnswers },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-  try {
-    const res = await axios.post(
-      `http://localhost:5000/api/quizzes/${id}/submit`,
-      { answers: orderedAnswers },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+      setScore(res.data.correctAnswers);
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Submission failed:", err.response?.data || err.message);
+      setError("Failed to submit quiz. Please try again later.");
+    }
+  };
 
-    setScore(res.data.correctAnswers);
-    setSubmitted(true);
-  } catch (err) {
-    console.error("Submission failed:", err.response?.data || err.message);
-    setError("Failed to submit quiz. Please try again later.");
-  }
-};
+  if (error) return <div className="TakeQuizContainer">{error}</div>;
+  if (!quizData) return <div className="TakeQuizContainer">Loading quiz...</div>;
 
-
-  if (error) return <div>{error}</div>;
-  if (!quizData) return <div>Loading quiz...</div>;
-  
   if (submitted) {
     return (
-      <div>
-        <h3>Quiz Complete!</h3>
+      <div className="TakeQuizContainer">
+        <h2>{quizData.title}</h2>
         <p>Your Score: {score} / {quizData.questions.length}</p>
         <button onClick={() => navigate("/student/dashboard")}>Back to Dashboard</button>
       </div>
@@ -75,30 +73,30 @@ function TakeQuiz() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>{quizData.title}</h2>
-       
-      {quizData.questions.map((question, index) => (
-        <div key={question._id}>
-         
-          <h4>{index + 1}. {question.questionText}</h4>
-          {question.options.map((option, idx) => (
-            <label key={idx} style={{ display: "block" }}>
-              <input
-                type="radio"
-                name={`question-${question._id}`}
-                value={option}
-                checked={answers[question._id] === option}
-                onChange={() => handleOptionChange(question._id, option)}
-                required
-              />
-              {option}
-            </label>
-          ))}
-        </div>
-      ))}
-      <button type="submit">Submit Quiz</button>
-    </form>
+    <div className="TakeQuizContainer">
+      <form onSubmit={handleSubmit}>
+        <h2>{quizData.title}</h2>
+        {quizData.questions.map((question, index) => (
+          <div key={question._id}>
+            <h4>{index + 1}. {question.questionText}</h4>
+            {question.options.map((option, idx) => (
+              <label key={idx}>
+                <input
+                  type="radio"
+                  name={`question-${question._id}`}
+                  value={option}
+                  checked={answers[question._id] === option}
+                  onChange={() => handleOptionChange(question._id, option)}
+                  required
+                />
+                {option}
+              </label>
+            ))}
+          </div>
+        ))}
+        <button type="submit">Submit Quiz</button>
+      </form>
+    </div>
   );
 }
 

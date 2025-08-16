@@ -1,0 +1,152 @@
+.DashboardContainer {
+  position: relative;
+  width: 100%;
+  min-height: 100vh; 
+  background: url("../../images/Main2.png") no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+
+.DashboardContainer .dashboard {
+  width: 90%;
+  max-width: 1000px;
+  background: transparent;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.DashboardContainer .dashboard h1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: white;
+  text-align: center;
+}
+
+.DashboardContainer .dashboard h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: white;
+  text-align: center;
+}
+
+.DashboardContainer .dashboard button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-size: 14px;
+}
+
+.DashboardContainer .dashboard button:hover {
+  opacity: 0.85;
+}
+
+.DashboardContainer .dashboard button.cancel {
+  background-color: #777;
+}
+
+.DashboardContainer .dashboard button.delete {
+  background-color: #e53935;
+}
+
+.DashboardContainer .dashboard button.edit {
+  background-color: #4caf50;
+}
+
+.DashboardContainer .dashboard button.leaderboard {
+  background-color: #2196f3;
+}
+
+.DashboardContainer .quiz-form {
+  margin-bottom: 20px;
+  
+}
+
+.DashboardContainer .quiz-form input {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  color: white;
+  border-radius: 6px;
+  width: calc(50% - 12px);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.DashboardContainer .quiz-form input.full {
+  width: 100%;
+}
+
+.DashboardContainer .quiz-form .question-box {
+  border: 1px solid #ddd;
+  
+  color: white;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.DashboardContainer .quiz-form .remove-question {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.DashboardContainer .quiz-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  position: relative;
+  transition: box-shadow 0.2s ease;
+}
+
+.DashboardContainer .quiz-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.DashboardContainer .quiz-card h3 {
+  cursor: pointer;
+  font-size: 18px;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.DashboardContainer .quiz-card p {
+  color: white;
+  font-size: 14px;
+}
+
+.DashboardContainer .quiz-card .quiz-actions {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.DashboardContainer .quiz-card ul {
+  margin: 5px 0 10px 20px;
+  padding: 0;
+}
+
+.DashboardContainer .quiz-card li {
+  font-size: 14px;
+  color: white;
+}
+
+.DashboardContainer .quiz-card .correct-answer {
+  color: #4caf50;
+  font-weight: bold;
+}

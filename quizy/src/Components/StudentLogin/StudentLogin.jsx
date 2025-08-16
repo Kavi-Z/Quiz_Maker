@@ -33,6 +33,7 @@ function StudentLogin() {
 
   return (
     <div className="student-login-container">
+       <button className="back-arrow" onClick={() => navigate(-1)}></button>
       <h2>Student Login</h2>
       <form className="student-login-form" onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>

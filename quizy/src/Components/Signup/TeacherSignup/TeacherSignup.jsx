@@ -57,6 +57,7 @@ const TeacherSignup = () => {
 
   return (
     <div className="signup-container">
+       <button className="back-arrow" onClick={() => navigate(-1)}></button> 
       <h2>Teacher Sign Up</h2>
       <form className="signup-form" onSubmit={handleSubmit}>
         <label>

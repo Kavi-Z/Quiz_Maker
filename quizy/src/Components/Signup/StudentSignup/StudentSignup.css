@@ -1,18 +1,29 @@
+.Wrapper_signup {
+  background-image: url(../../../images/Main2.png);
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center; /* centers horizontally */
+  align-items: center;     /* centers vertically */
+}
 
 .signup-container {
+  width: 100%;
   max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: white;
+  padding: 30px 20px;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   font-family: Arial, sans-serif;
 }
 
 .signup-container h2 {
   text-align: center;
   margin-bottom: 30px;
-  color: #333;
+  color: white;
 }
 
 .signup-form {
@@ -25,7 +36,7 @@
   display: flex;
   flex-direction: column;
   font-weight: 600;
-  color: #555;
+  color: white;
   font-size: 14px;
 }
 
@@ -34,9 +45,12 @@
   font-size: 16px;
   margin-top: 6px;
   border: 1px solid #ccc;
+  background-color: transparent;
   border-radius: 6px;
   outline: none;
   transition: border-color 0.3s ease;
+  color: white;
+  width: 100%;
 }
 
 .signup-form input:focus {

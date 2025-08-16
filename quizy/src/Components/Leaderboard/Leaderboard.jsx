@@ -13,8 +13,7 @@ const Leaderboard = () => {
       try {
         setError(null);
         console.log('Fetching leaderboard for quizId:', quizId);
-        
-        // Get token from localStorage (adjust based on how you store auth tokens)
+         
         const token = localStorage.getItem('token') || localStorage.getItem('authToken');
         
         if (!token) {
@@ -23,7 +22,7 @@ const Leaderboard = () => {
 
         const res = await axios.get(`/api/quizzes/${quizId}/leaderboard`, {
           headers: {
-            Authorization: `Bearer ${token}`, // Add auth header
+            Authorization: `Bearer ${token}`,  
           },
         });
         

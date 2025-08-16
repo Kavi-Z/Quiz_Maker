@@ -16,7 +16,7 @@ function StudentDashboard() {
   const fetchQuizzes = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/quizzes/all", {
+      const res = await axios.get(`${process.env.REACT_APP_QUIZ_APP_BACKEND_URL}/api/quizzes/all`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setQuizzes(res.data);
@@ -28,7 +28,7 @@ function StudentDashboard() {
   const fetchResults = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/quizzes/my-results", {
+      const res = await axios.get(`${process.env.REACT_APP_QUIZ_APP_BACKEND_URL}/api/quizzes/my-results`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setResults(res.data);

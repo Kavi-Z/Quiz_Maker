@@ -23,7 +23,7 @@ function TeacherDashboard() {
   const fetchQuizzes = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:5000/api/quizzes/my-quizzes", {
+      const response = await axios.get(`${process.env.REACT_APP_QUIZ_APP_BACKEND_URL}/api/quizzes/my-quizzes`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setQuizzes(response.data);
@@ -44,11 +44,15 @@ function TeacherDashboard() {
 
     try {
       if (editingQuizId) {
-        await axios.put(`http://localhost:5000/api/quizzes/${editingQuizId}`, newQuiz, {
+         await axios.put(
+      `${process.env.REACT_APP_QUIZ_APP_BACKEND_URL}/api/quizzes/${editingQuizId}`,
+      newQuiz, {
           headers: { Authorization: `Bearer ${token}` }
         });
       } else {
-        await axios.post("http://localhost:5000/api/quizzes", newQuiz, {
+        await axios.post(
+      `${process.env.REACT_APP_QUIZ_APP_BACKEND_URL}/api/quizzes`,
+      newQuiz, {
           headers: { Authorization: `Bearer ${token}` }
         });
       }
@@ -67,7 +71,8 @@ function TeacherDashboard() {
 
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(`http://localhost:5000/api/quizzes/${quizId}`, {
+      await axios.delete(
+  `${process.env.REACT_APP_QUIZ_APP_BACKEND_URL}/api/quizzes/${quizId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setQuizzes(quizzes.filter((q) => q._id !== quizId));

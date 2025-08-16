@@ -4,7 +4,7 @@ import axios from "axios";
 import './StudentLogin.css';
 
 function StudentLogin() {
-  const [email, setEmail] = useState("");        // <- changed to email
+  const [email, setEmail] = useState("");        
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ function StudentLogin() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
+      const response = await axios.post(`${process.env.REACT_APP_QUIZ_APP_BACKEND_URL}/api/auth/login`, {
         email,
         password,
         role: "student",  

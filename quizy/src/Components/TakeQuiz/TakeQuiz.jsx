@@ -17,7 +17,7 @@ function TakeQuiz() {
     const fetchQuiz = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`http://localhost:5000/api/quizzes/${id}`, {
+        const res = await axios.get(`${process.env.REACT_APP_QUIZ_APP_BACKEND_URL}/api/quizzes/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setQuizData(res.data);
@@ -46,7 +46,7 @@ function TakeQuiz() {
 
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/quizzes/${id}/submit`,
+        `${process.env.REACT_APP_QUIZ_APP_BACKEND_URL}/api/quizzes/${id}/submit`, // check
         { answers: orderedAnswers },
         { headers: { Authorization: `Bearer ${token}` } }
       );

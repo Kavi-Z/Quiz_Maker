@@ -39,7 +39,7 @@ function StudentDashboard() {
 
   return (
     <div className="StudentDashboardContainer">
-       <button className="back-arrow" onClick={() => navigate(-1)}></button>
+       <button className="back-arrow" onClick={() => navigate('/')}></button>
       <h2>Student Dashboard</h2>
       <div className="quiz-list">
         {quizzes.map((quiz) => {

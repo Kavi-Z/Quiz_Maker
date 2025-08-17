@@ -128,7 +128,7 @@ function TeacherDashboard() {
 
   return (
     <div className="DashboardContainer">
-         <button className="back-arrow" onClick={() => navigate(-1)}></button> 
+         <button className="back-arrow" onClick={() => navigate('/')}></button> 
     <div className="dashboard" style={{ padding: "20px" }}>
       <h1>Teacher Dashboard</h1>
       <h2>Your Quizzes</h2>
